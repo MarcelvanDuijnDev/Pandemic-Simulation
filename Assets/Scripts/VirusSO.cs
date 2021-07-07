@@ -1,0 +1,12 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "Virus", menuName = "SO/Virus", order = 0)]
+public class VirusSO : ScriptableObject
+{
+    public string VirusName;
+
+
+
+}
