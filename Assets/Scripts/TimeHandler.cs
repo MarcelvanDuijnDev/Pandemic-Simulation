@@ -84,4 +84,14 @@ public class TimeHandler : MonoBehaviour
         _DateTimeText.text = "Current Time: " + Mathf.Floor(_CurrentTime.x) + ":" + Mathf.Floor(_CurrentTime.y) + ":" + Mathf.Floor(_CurrentTime.z) + 
             " / " + _CurrentDate.x + "- " + _CurrentDate.y + "- " + _CurrentDate.z;
     }
+
+    public Vector3 Get_Time()
+    {
+        return _CurrentTime;
+    }
+    public Vector3 Get_Data()
+    {
+        return _CurrentDate;
+    }
 }
+

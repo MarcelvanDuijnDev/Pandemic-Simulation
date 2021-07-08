@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b1f8af7cbd48443a2e63cb975c7d26, type: 3}
+  m_Name: Country_Netherlands
+  m_EditorClassIdentifier: 
+  CountryName: Netherlands
+  Population: 17407585
+  Provinces:
+  - {fileID: 11400000, guid: cda226f2f4bb14b44882384f6103dfb0, type: 2}
+  - {fileID: 11400000, guid: 3329ca0e03fa72a4b84ece0c7fddc7aa, type: 2}
+  - {fileID: 11400000, guid: 5020fb69cfb6ca842bb9a40d5e3e8445, type: 2}
+  - {fileID: 11400000, guid: f49d78c8c8a3184419171bf755bb9c52, type: 2}
+  - {fileID: 11400000, guid: 9998b3bef62f0d74b9f6bd8368acd69f, type: 2}
+  - {fileID: 11400000, guid: 48e1d7880f77c0146bd16d3c3771a2b8, type: 2}
+  - {fileID: 11400000, guid: 1946517ee9f6217419571756cea57295, type: 2}
+  - {fileID: 11400000, guid: 2553b2c5fc294a041ae0967bb67ce03b, type: 2}
+  - {fileID: 11400000, guid: 3ee884a1761f04849aa87bd49d4f7d6e, type: 2}
+  - {fileID: 11400000, guid: 786c0a7fb66f68846b68be4b50b333ae, type: 2}
+  - {fileID: 11400000, guid: dde96d42b994dbb4c829ec8bed443ad3, type: 2}
+  - {fileID: 11400000, guid: 53686da3af1159247b63cb5f3b2d885a, type: 2}

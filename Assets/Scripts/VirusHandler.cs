@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class VirusHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private List<Country> Countries;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        for (int i = 0; i < Countries.Count; i++)
+        {
+            for (int j = 0; j < Countries[i]._Provinces.Count; j++)
+            {
+                if(Countries[i]._Provinces[j].Infected < Countries[i]._Provinces[j].Population)
+                {
+                    //For Testing
+                    Countries[i]._Provinces[j].Add_Infected(1000);
+                    Countries[i].UpdateInfected();
+                }
+            }
+        }
     }
 }
