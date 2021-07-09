@@ -13,6 +13,7 @@ public class CameraMovement : MonoBehaviour
     private Country _CountryRef;
     private Province _ProvinceRef;
 
+    private GameObject _CheckPrevObj;
     private float _CurrentSpeed;
 
     void Update()
@@ -44,18 +45,13 @@ public class CameraMovement : MonoBehaviour
         {
             SimulationHandler.SIMHANDLER.Set_ClickInfoLocation(hit.transform);
 
-            //Get  Country Ref
+            //Get Country Ref
             if (hit.transform.gameObject.layer == 6)
             {
-                if (_CountryRef == null)
+                if (_CountryRef == null || hit.transform.gameObject != _CheckPrevObj)
                 {
                     _CountryRef = hit.transform.GetComponent<Country>();
-                    _CountryRef.UpdateInfected();
-                    //Set Info
-                    string info = "Country Name: " + _CountryRef.CountryProfile.CountryName + "\n" +
-                        "Population: " + _CountryRef.CountryProfile.Population + "\n" + 
-                        "Infected: " + _CountryRef.Infected;
-                    SimulationHandler.SIMHANDLER.Set_ClickInfoText(info);
+                    _CheckPrevObj = hit.transform.gameObject;
                 }
             }
             else
@@ -64,18 +60,32 @@ public class CameraMovement : MonoBehaviour
             //Get Province Ref
             if (hit.transform.gameObject.layer == 7)
             {
-                if (_ProvinceRef == null)
+                if (_ProvinceRef == null || hit.transform.gameObject != _CheckPrevObj)
                 {
                     _ProvinceRef = hit.transform.GetComponent<Province>();
-                    //Set Info
-                    string info = "Province Name: " + _ProvinceRef.ProvinceProfile.ProvinceName + "\n" +
-                        "Population: " + _ProvinceRef.ProvinceProfile.Population + "\n" +
-                        "Infected: " + _ProvinceRef.Infected;
-                    SimulationHandler.SIMHANDLER.Set_ClickInfoText(info);
+                    _CheckPrevObj = hit.transform.gameObject;
                 }
             }
             else
                 _ProvinceRef = null;
+        }
+
+        //Update Country Info
+        if(_CountryRef != null)
+        {
+            string info = "Country Name: " + _CountryRef.CountryProfile.CountryName + "\n" +
+                "Population: " + _CountryRef.CountryProfile.Population + "\n" +
+                "Infected: " + _CountryRef.Infected;
+            SimulationHandler.SIMHANDLER.Set_ClickInfoText(info);
+        }
+
+        //Update Province Info
+        if(_ProvinceRef != null)
+        {
+            string info = "Province Name: " + _ProvinceRef.ProvinceProfile.ProvinceName + "\n" +
+                "Population: " + _ProvinceRef.ProvinceProfile.Population + "\n" +
+                "Infected: " + _ProvinceRef.Infected;
+            SimulationHandler.SIMHANDLER.Set_ClickInfoText(info);
         }
     }
 }

@@ -15,7 +15,7 @@ public class VirusHandler : MonoBehaviour
                 if(Countries[i]._Provinces[j].Infected < Countries[i]._Provinces[j].Population)
                 {
                     //For Testing
-                    Countries[i]._Provinces[j].Add_Infected(1000);
+                    Countries[i]._Provinces[j].Add_Infected(10);
                     Countries[i].UpdateInfected();
                 }
             }

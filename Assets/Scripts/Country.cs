@@ -9,10 +9,12 @@ public class Country : MonoBehaviour
     public float Population;
 
     public List<Province> _Provinces;
+    private Material _Mat;
 
     private void Start()
     {
         Population = CountryProfile.Population;
+        _Mat = GetComponent<MeshRenderer>().material;
     }
 
     public void UpdateInfected()
@@ -23,5 +25,6 @@ public class Country : MonoBehaviour
             infected += _Provinces[i].Infected;
         }
         Infected = infected;
+        _Mat.color = new Vector4(1, 1 - Infected / Population, 1 - Infected / Population, 1);
     }
 }

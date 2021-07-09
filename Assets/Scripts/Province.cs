@@ -19,8 +19,6 @@ public class Province : MonoBehaviour
     public void Add_Infected(int amount)
     {
         Infected += amount;
-
-
         _Mat.color = new Vector4(1, 1 - Infected/Population, 1 - Infected / Population, 1);
     }
 }
