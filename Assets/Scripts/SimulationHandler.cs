@@ -15,6 +15,7 @@ public class SimulationHandler : MonoBehaviour
 
 
     [Header("Click/WorldSpace Info")]
+    public Transform CameraObj;
     public Transform ClickInfo;
     public TextMeshProUGUI ClickInfoText; 
 
@@ -26,6 +27,12 @@ public class SimulationHandler : MonoBehaviour
         DataHandler = GetComponent<DataHandler>();
         TimeHandler = GetComponent<TimeHandler>();
         VirusHandler = GetComponent<VirusHandler>();
+    }
+
+    private void Update()
+    {
+        float scale = CameraObj.position.y * 0.1f;
+        ClickInfo.localScale = new Vector3(scale, scale, scale);
     }
 
     public void Set_ClickInfoLocation(Transform obj)
