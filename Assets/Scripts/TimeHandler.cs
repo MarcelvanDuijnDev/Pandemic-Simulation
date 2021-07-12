@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class TimeHandler : MonoBehaviour
 {
@@ -10,88 +9,76 @@ public class TimeHandler : MonoBehaviour
     public Vector3 StartTime = new Vector3(3,16,20);
     public Vector3 StartDate = new Vector3(7,7,2021);
 
-    [Header("TextMeshPro")]
-    [SerializeField] private TextMeshProUGUI _DateTimeText = null;
+    public Vector3 CurrentTime;
+    public Vector3 CurrentDate;
 
-    private Vector3 _CurrentTime;
-    private Vector3 _CurrentDate;
+    public static TimeHandler TIME = null;
 
     void Start()
     {
-        _CurrentTime = StartTime;
-        _CurrentDate = StartDate;
+        TIME = this;
+
+        CurrentTime = StartTime;
+        CurrentDate = StartDate;
     }
 
     void Update()
     {
         //Update Time
-        _CurrentTime.x += TimeSpeed.x * Time.deltaTime;
-        _CurrentTime.y += TimeSpeed.y * Time.deltaTime;
-        _CurrentTime.z += TimeSpeed.z * Time.deltaTime;
+        CurrentTime.x += TimeSpeed.x * Time.deltaTime;
+        CurrentTime.y += TimeSpeed.y * Time.deltaTime;
+        CurrentTime.z += TimeSpeed.z * Time.deltaTime;
 
 
         //Update Time
-        if (_CurrentTime.z > 60) //Seconds > Minutes
+        if (CurrentTime.z > 60) //Seconds > Minutes
         {
-            _CurrentTime.z = 0;
-            _CurrentTime.y += 1;
+            CurrentTime.z = 0;
+            CurrentTime.y += 1;
         }
-        if(_CurrentTime.y > 60) //Minutes > Hours
+        if(CurrentTime.y > 60) //Minutes > Hours
         {
-            _CurrentTime.y = 0;
-            _CurrentTime.x += 1;
+            CurrentTime.y = 0;
+            CurrentTime.x += 1;
         }
-        if(_CurrentTime.x >= 24) //Hours > Days
+        if(CurrentTime.x >= 24) //Hours > Days
         {
-            _CurrentTime.x = 0;
-            _CurrentDate.x += 1;
+            CurrentTime.x = 0;
+            CurrentDate.x += 1;
         }
 
         //Update Date
         //DAYS > MONTHS
-        if(_CurrentDate.y == 1 || _CurrentDate.y == 3 || _CurrentDate.y == 5 || _CurrentDate.y == 7 || _CurrentDate.y == 8 || _CurrentDate.y == 10 || _CurrentDate.y == 12) //31 days
+        if(CurrentDate.y == 1 || CurrentDate.y == 3 || CurrentDate.y == 5 || CurrentDate.y == 7 || CurrentDate.y == 8 || CurrentDate.y == 10 || CurrentDate.y == 12) //31 days
         {
-            if(_CurrentDate.x > 31)
+            if(CurrentDate.x > 31)
             {
-                _CurrentDate.x = 1;
-                _CurrentDate.y += 1;
+                CurrentDate.x = 1;
+                CurrentDate.y += 1;
             }
         }
-        if(_CurrentDate.y == 4 || _CurrentDate.y == 6 || _CurrentDate.y == 9 || _CurrentDate.y == 11) //30 days
+        if(CurrentDate.y == 4 || CurrentDate.y == 6 || CurrentDate.y == 9 || CurrentDate.y == 11) //30 days
         {
-            if (_CurrentDate.x > 30)
+            if (CurrentDate.x > 30)
             {
-                _CurrentDate.x = 1;
-                _CurrentDate.y += 1;
+                CurrentDate.x = 1;
+                CurrentDate.y += 1;
             }
         }
-        if(_CurrentDate.y == 2) // 28 days (leap years not implemented)
+        if(CurrentDate.y == 2) // 28 days (leap years not implemented)
         {
-            if (_CurrentDate.x > 28)
+            if (CurrentDate.x > 28)
             {
-                _CurrentDate.x = 1;
-                _CurrentDate.y += 1;
+                CurrentDate.x = 1;
+                CurrentDate.y += 1;
             }
         }
         //MONTHS > YEARS
-        if(_CurrentDate.y > 12)
+        if(CurrentDate.y > 12)
         {
-            _CurrentDate.y = 1;
-            _CurrentDate.z += 1;
+            CurrentDate.y = 1;
+            CurrentDate.z += 1;
         }
-
-        //Display time/date
-        _DateTimeText.text = "Current Time: " + Mathf.Floor(_CurrentTime.x) + ":" + Mathf.Floor(_CurrentTime.y) + ":" + Mathf.Floor(_CurrentTime.z) + 
-            " / " + _CurrentDate.x + "- " + _CurrentDate.y + "- " + _CurrentDate.z;
-    }
-
-    public Vector3 Get_Time()
-    {
-        return _CurrentTime;
-    }
-    public Vector3 Get_Data()
-    {
-        return _CurrentDate;
     }
 }
 

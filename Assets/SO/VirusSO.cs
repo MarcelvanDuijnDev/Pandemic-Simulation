@@ -7,6 +7,9 @@ public class VirusSO : ScriptableObject
 {
     public string VirusName;
 
-
+    [Header("Infection")]
+    public float Ro;
+    public float InfectionDuration;
+    
 
 }

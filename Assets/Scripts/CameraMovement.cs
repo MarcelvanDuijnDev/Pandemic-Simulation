@@ -18,16 +18,40 @@ public class CameraMovement : MonoBehaviour
 
     void Update()
     {
-        //CameraMovement
+        Movement();
+        SceneInteraction();
+    }
+
+    private void Movement()
+    {
+        //variables
+        float xas = 0;
+        float zas = 0;
+        float yas = Input.mouseScrollDelta.y;
+
+        //Mouse
+        if (Input.mousePosition.x < 10)
+            xas = -1;
+        if (Input.mousePosition.x > Screen.width - 10)
+            xas = 1;
+        if (Input.mousePosition.y < 10)
+            zas = -1;
+        if (Input.mousePosition.y > Screen.height - 10)
+            zas = 1;
+
+        //WSAD
+        if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+        {
+            xas = Input.GetAxis("Horizontal");
+            zas = Input.GetAxis("Vertical");
+        }
+
         if (Input.GetKey(KeyCode.LeftShift))
             _CurrentSpeed = _SprintSpeed;
         else
             _CurrentSpeed = _Speed;
 
-        float xas = Input.GetAxis("Horizontal");
-        float zas = Input.GetAxis("Vertical");
-        float yas = Input.mouseScrollDelta.y;
-
+        //Zoom/Scroll
         if (_InverseScroll)
             yas *= _ScrollSpeed;
         else
@@ -35,12 +59,12 @@ public class CameraMovement : MonoBehaviour
 
         //Apply Movement
         transform.Translate(new Vector3(xas * _CurrentSpeed, yas, zas * _CurrentSpeed) * Time.deltaTime);
-
-
+    }
+    private void SceneInteraction()
+    {
         //Mouse pos / hit
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
         if (Physics.Raycast(ray, out hit))
         {
             SimulationHandler.SIMHANDLER.Set_ClickInfoLocation(hit.transform);
@@ -71,20 +95,20 @@ public class CameraMovement : MonoBehaviour
         }
 
         //Update Country Info
-        if(_CountryRef != null)
+        if (_CountryRef != null)
         {
             string info = "Country Name: " + _CountryRef.CountryProfile.CountryName + "\n" +
-                "Population: " + _CountryRef.CountryProfile.Population + "\n" +
-                "Infected: " + _CountryRef.Infected;
+                "Population: " + _CountryRef.CountryProfile.Population.ToString("n0") + "\n" +
+                "Infected: " + _CountryRef.Infected.ToString("n0");
             SimulationHandler.SIMHANDLER.Set_ClickInfoText(info);
         }
 
         //Update Province Info
-        if(_ProvinceRef != null)
+        if (_ProvinceRef != null)
         {
             string info = "Province Name: " + _ProvinceRef.ProvinceProfile.ProvinceName + "\n" +
-                "Population: " + _ProvinceRef.ProvinceProfile.Population + "\n" +
-                "Infected: " + _ProvinceRef.Infected;
+                "Population: " + _ProvinceRef.ProvinceProfile.Population.ToString("n0") + "\n" +
+                "Infected: " + _ProvinceRef.Infected.ToString("n0");
             SimulationHandler.SIMHANDLER.Set_ClickInfoText(info);
         }
     }

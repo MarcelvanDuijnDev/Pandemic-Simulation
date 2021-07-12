@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Virus_SARS-CoV-2
   m_EditorClassIdentifier: 
   VirusName: SARS-CoV-2
+  Ro: 1.1
+  InfectionDuration: 0

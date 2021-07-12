@@ -36,6 +36,7 @@ public class DATA_SPREAD
 {
     public List<DATA_SPREAD_PLACE> Country;
 }
+
 [System.Serializable]
 public class DATA_SPREAD_PLACE
 {
@@ -44,7 +45,6 @@ public class DATA_SPREAD_PLACE
     public List<DATA_TIME> Time;
     public List<int> Infected;
 }
-
 
 [System.Serializable]
 public class DATA_TIME

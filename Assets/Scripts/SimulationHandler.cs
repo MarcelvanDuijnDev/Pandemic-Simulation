@@ -9,7 +9,6 @@ public class SimulationHandler : MonoBehaviour
 
     [HideInInspector] public WorldHandler WorldHandler;
     [HideInInspector] public DataHandler DataHandler;
-    [HideInInspector] public TimeHandler TimeHandler;
     [HideInInspector] public VirusHandler VirusHandler;
 
 
@@ -25,7 +24,6 @@ public class SimulationHandler : MonoBehaviour
 
         WorldHandler = GetComponent<WorldHandler>();
         DataHandler = GetComponent<DataHandler>();
-        TimeHandler = GetComponent<TimeHandler>();
         VirusHandler = GetComponent<VirusHandler>();
     }
 

@@ -15,12 +15,7 @@ public class WorldHandler : MonoBehaviour
             {
                 population += Countries[i].Provinces[j].Population;
             }
-            Debug.Log(Countries[i].CountryName + " Population: " + population.ToString());
+            Countries[i].Population = population;
         }
-    }
-
-    void Update()
-    {
-        
     }
 }

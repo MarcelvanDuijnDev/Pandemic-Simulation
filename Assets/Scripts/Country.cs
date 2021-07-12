@@ -5,13 +5,13 @@ using UnityEngine;
 public class Country : MonoBehaviour
 {
     public CountrySO CountryProfile;
-    public float Infected;
-    public float Population;
+    public double Infected;
+    public double Population;
 
     public List<Province> _Provinces;
     private Material _Mat;
 
-    private void Start()
+    private void Awake()
     {
         Population = CountryProfile.Population;
         _Mat = GetComponent<MeshRenderer>().material;
@@ -25,6 +25,8 @@ public class Country : MonoBehaviour
             infected += _Provinces[i].Infected;
         }
         Infected = infected;
-        _Mat.color = new Vector4(1, 1 - Infected / Population, 1 - Infected / Population, 1);
+
+        float colorcalc = (float)Infected / (float)Population;
+        _Mat.color = new Vector4(1, 1 - colorcalc, 1 - colorcalc, 1);
     }
 }
