@@ -42,8 +42,7 @@ public class DATA_SPREAD_PLACE
 {
     public string PlaceName;
     public int Population;
-    public List<DATA_TIME> Time;
-    public List<int> Infected;
+    public List<DATA_TIMEINFECTIONS> Infections;
 }
 
 [System.Serializable]
@@ -51,4 +50,12 @@ public class DATA_TIME
 {
     public Vector3 Time;
     public Vector3 Date;
+}
+
+[System.Serializable]
+public class DATA_TIMEINFECTIONS
+{
+    public Vector3 Time;
+    public Vector3 Date;
+    public double Infected;
 }

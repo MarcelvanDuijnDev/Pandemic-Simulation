@@ -5,18 +5,23 @@ using UnityEngine;
 
 public class SimulationHandler : MonoBehaviour
 {
-    public static SimulationHandler SIMHANDLER;
-
-    [HideInInspector] public WorldHandler WorldHandler;
-    [HideInInspector] public DataHandler DataHandler;
-    [HideInInspector] public VirusHandler VirusHandler;
-
-
+    [Header("Settings Optimization")]
+    [SerializeField] private float _Data_Coutry_UpdateTime = 30;
+    [SerializeField] private float _Data_Province_UpdateTime = 60;
+    private float _TimerCountry = 0;
+    private float _TimerProvince = 0;
 
     [Header("Click/WorldSpace Info")]
     public Transform CameraObj;
     public Transform ClickInfo;
-    public TextMeshProUGUI ClickInfoText; 
+    public TextMeshProUGUI ClickInfoText;
+
+    //Ref
+    public static SimulationHandler SIMHANDLER;
+    public UILineRenderer Graph;
+    [HideInInspector] public WorldHandler WorldHandler;
+    [HideInInspector] public DataHandler DataHandler;
+    [HideInInspector] public VirusHandler VirusHandler;
 
     void Start()
     {
@@ -31,6 +36,35 @@ public class SimulationHandler : MonoBehaviour
     {
         float scale = CameraObj.position.y * 0.1f;
         ClickInfo.localScale = new Vector3(scale, scale, scale);
+
+        UpdateData();
+    }
+
+    private void UpdateData()
+    {
+        //Country
+        _TimerCountry += 1 * Time.deltaTime;
+        if(_TimerCountry >= _Data_Coutry_UpdateTime)
+        {
+            for (int i = 0; i < WorldHandler.Countries.Count; i++)
+            {
+                WorldHandler.Countries[i].AddDataInfections();
+            }
+            _TimerCountry = 0;
+        }
+
+        _TimerProvince += 1 * Time.deltaTime;
+        if (_TimerProvince >= _Data_Province_UpdateTime)
+        {
+            for (int i = 0; i < WorldHandler.Countries.Count; i++)
+            {
+                for (int j = 0; j < WorldHandler.Countries[i].Provinces.Count; j++)
+                {
+                    WorldHandler.Countries[i].Provinces[j].AddDataInfections();
+                }
+            }
+            _TimerProvince = 0;
+        }
     }
 
     public void Set_ClickInfoLocation(Transform obj)

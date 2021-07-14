@@ -9,6 +9,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float _ScrollSpeed = 20;
     [SerializeField] private float _SprintSpeed = 8;
     [SerializeField] private bool _InverseScroll = false;
+    [SerializeField] private bool _CheckCorner = true;
 
     private Country _CountryRef;
     private Province _ProvinceRef;
@@ -30,14 +31,17 @@ public class CameraMovement : MonoBehaviour
         float yas = Input.mouseScrollDelta.y;
 
         //Mouse
-        if (Input.mousePosition.x < 10)
-            xas = -1;
-        if (Input.mousePosition.x > Screen.width - 10)
-            xas = 1;
-        if (Input.mousePosition.y < 10)
-            zas = -1;
-        if (Input.mousePosition.y > Screen.height - 10)
-            zas = 1;
+        if (_CheckCorner)
+        {
+            if (Input.mousePosition.x < 10)
+                xas = -1;
+            if (Input.mousePosition.x > Screen.width - 10)
+                xas = 1;
+            if (Input.mousePosition.y < 10)
+                zas = -1;
+            if (Input.mousePosition.y > Screen.height - 10)
+                zas = 1;
+        }
 
         //WSAD
         if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
@@ -111,5 +115,9 @@ public class CameraMovement : MonoBehaviour
                 "Infected: " + _ProvinceRef.Infected.ToString("n0");
             SimulationHandler.SIMHANDLER.Set_ClickInfoText(info);
         }
+
+        //SetGraph
+        SimulationHandler.SIMHANDLER.Graph._Province = _ProvinceRef;
+        SimulationHandler.SIMHANDLER.Graph._Country = _CountryRef;
     }
 }

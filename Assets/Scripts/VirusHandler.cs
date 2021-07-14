@@ -11,6 +11,10 @@ public class VirusHandler : MonoBehaviour
     public double TotalPopulation;
     public double TotalPopulationInfected;
 
+    //testing
+    float _Timer = 0;
+    public float _UpdateTime = .1f;
+
     private void Start()
     {
         double population = 0;
@@ -23,20 +27,26 @@ public class VirusHandler : MonoBehaviour
 
     void Update()
     {
-        double infected = 0;
-        for (int i = 0; i < Countries.Count; i++)
+        _Timer += 1 * Time.deltaTime;
+        if (_Timer >= _UpdateTime)
         {
-            infected += Countries[i].Infected;
-            for (int j = 0; j < Countries[i]._Provinces.Count; j++)
+
+            double infected = 0;
+            for (int i = 0; i < Countries.Count; i++)
             {
-                if(Countries[i]._Provinces[j].Infected < Countries[i]._Provinces[j].Population)
+                infected += Countries[i].Infected;
+                for (int j = 0; j < Countries[i].Provinces.Count; j++)
                 {
-                    //For Testing
-                    Countries[i]._Provinces[j].Add_Infected(10);
-                    Countries[i].UpdateInfected();
+                    if (Countries[i].Provinces[j].Infected < Countries[i].Provinces[j].Population)
+                    {
+                        //For Testing
+                        Countries[i].Provinces[j].Add_Infected(Random.Range(0, 1000));
+                        Countries[i].UpdateInfected();
+                    }
                 }
             }
+            TotalPopulationInfected = infected;
+            _Timer = 0;
         }
-        TotalPopulationInfected = infected;
     }
 }
