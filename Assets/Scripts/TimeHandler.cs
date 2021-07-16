@@ -80,5 +80,68 @@ public class TimeHandler : MonoBehaviour
             CurrentDate.z += 1;
         }
     }
+
+    public Vector3 Get_DateAfterDays(int days)
+    {
+        Vector3 calcdate = new Vector3(CurrentDate.x + days, CurrentDate.y, CurrentDate.z);
+
+        //Days
+        calcdate.x = CurrentDate.x + days;
+
+        bool calcdone = false;
+
+        while (!calcdone)
+        {
+            //DAYS > MONTHS
+            if (calcdate.y == 1 || calcdate.y == 3 || calcdate.y == 5 || calcdate.y == 7 || calcdate.y == 8 || calcdate.y == 10 || calcdate.y == 12) //31 days
+            {
+                if (calcdate.x > 31)
+                {
+                    calcdate.x -= 31;
+                    calcdate.y += 1;
+                }
+            }
+            if (calcdate.y == 4 || calcdate.y == 6 || calcdate.y == 9 || calcdate.y == 11) //30 days
+            {
+                if (calcdate.x > 30)
+                {
+                    calcdate.x -= 30;
+                    calcdate.y += 1;
+                }
+            }
+            if (calcdate.y == 2) // 28 days (leap years not implemented)
+            {
+                if (calcdate.x > 28)
+                {
+                    calcdate.x -= 28;
+                    calcdate.y += 1;
+                }
+            }
+            //MONTHS > YEARS
+            if (calcdate.y > 12)
+            {
+                calcdate.y = 1;
+                calcdate.z += 1;
+            }
+
+            bool check = true;
+
+            //Check if calculation is done
+            if (calcdate.y == 1 || calcdate.y == 3 || calcdate.y == 5 || calcdate.y == 7 || calcdate.y == 8 || calcdate.y == 10 || calcdate.y == 12) //31 days
+                if (calcdate.x > 31)
+                    check = false;
+            if (calcdate.y == 4 || calcdate.y == 6 || calcdate.y == 9 || calcdate.y == 11) //30 days
+                if (calcdate.x > 30)
+                    check = false;
+            if (calcdate.y == 2) // 28 days (leap years not implemented)
+                if (calcdate.x > 28)
+                    check = false;
+
+            if (check)
+                calcdone = true;
+        }
+
+        return calcdate;
+    }
 }
 

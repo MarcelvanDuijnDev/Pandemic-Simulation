@@ -6,8 +6,8 @@ using UnityEngine;
 public class SimulationHandler : MonoBehaviour
 {
     [Header("Settings Optimization")]
-    [SerializeField] private float _Data_Coutry_UpdateTime = 30;
-    [SerializeField] private float _Data_Province_UpdateTime = 60;
+    public float Data_Coutry_UpdateTime = 30;
+    public float Data_Province_UpdateTime = 60;
     private float _TimerCountry = 0;
     private float _TimerProvince = 0;
 
@@ -18,7 +18,7 @@ public class SimulationHandler : MonoBehaviour
 
     //Ref
     public static SimulationHandler SIMHANDLER;
-    public UILineRenderer Graph;
+    public List<UILineRenderer> Graph = new List<UILineRenderer>();
     [HideInInspector] public WorldHandler WorldHandler;
     [HideInInspector] public DataHandler DataHandler;
     [HideInInspector] public VirusHandler VirusHandler;
@@ -44,7 +44,7 @@ public class SimulationHandler : MonoBehaviour
     {
         //Country
         _TimerCountry += 1 * Time.deltaTime;
-        if(_TimerCountry >= _Data_Coutry_UpdateTime)
+        if(_TimerCountry >= Data_Coutry_UpdateTime)
         {
             for (int i = 0; i < WorldHandler.Countries.Count; i++)
             {
@@ -54,7 +54,7 @@ public class SimulationHandler : MonoBehaviour
         }
 
         _TimerProvince += 1 * Time.deltaTime;
-        if (_TimerProvince >= _Data_Province_UpdateTime)
+        if (_TimerProvince >= Data_Province_UpdateTime)
         {
             for (int i = 0; i < WorldHandler.Countries.Count; i++)
             {

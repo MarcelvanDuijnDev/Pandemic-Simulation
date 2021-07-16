@@ -37,10 +37,10 @@ public class VirusHandler : MonoBehaviour
                 infected += Countries[i].Infected;
                 for (int j = 0; j < Countries[i].Provinces.Count; j++)
                 {
-                    if (Countries[i].Provinces[j].Infected < Countries[i].Provinces[j].Population)
+                    if (Countries[i].Provinces[j].Population_Infected < Countries[i].Provinces[j].Population)
                     {
                         //For Testing
-                        Countries[i].Provinces[j].Add_Infected(Random.Range(0, 1000));
+                        Countries[i].Provinces[j].Add_Infected(Random.Range(0, 100000));
                         Countries[i].UpdateInfected();
                     }
                 }

@@ -112,12 +112,16 @@ public class CameraMovement : MonoBehaviour
         {
             string info = "Province Name: " + _ProvinceRef.ProvinceProfile.ProvinceName + "\n" +
                 "Population: " + _ProvinceRef.ProvinceProfile.Population.ToString("n0") + "\n" +
-                "Infected: " + _ProvinceRef.Infected.ToString("n0");
+                "Infected: " + _ProvinceRef.Population_Infected.ToString("n0");
             SimulationHandler.SIMHANDLER.Set_ClickInfoText(info);
         }
 
         //SetGraph
-        SimulationHandler.SIMHANDLER.Graph._Province = _ProvinceRef;
-        SimulationHandler.SIMHANDLER.Graph._Country = _CountryRef;
+        for (int i = 0; i < SimulationHandler.SIMHANDLER.Graph.Count; i++)
+        {
+            SimulationHandler.SIMHANDLER.Graph[i]._Province = _ProvinceRef;
+            SimulationHandler.SIMHANDLER.Graph[i]._Country = _CountryRef;
+        }
+        
     }
 }

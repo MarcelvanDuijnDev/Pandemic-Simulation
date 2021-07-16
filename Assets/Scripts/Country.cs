@@ -10,7 +10,7 @@ public class Country : MonoBehaviour
 
     public List<Province> Provinces;
 
-    public List<DATA_TIMEINFECTIONS> Infections = new List<DATA_TIMEINFECTIONS>();
+    public List<DATA_TIMEAMOUNT> Infections = new List<DATA_TIMEAMOUNT>();
 
     private Material _Mat;
 
@@ -25,7 +25,7 @@ public class Country : MonoBehaviour
         float infected = 0;
         for (int i = 0; i < Provinces.Count; i++)
         {
-            infected += Provinces[i].Infected;
+            infected += Provinces[i].Population_Infected;
         }
         Infected = infected;
 
@@ -35,10 +35,10 @@ public class Country : MonoBehaviour
 
     public void AddDataInfections()
     {
-        DATA_TIMEINFECTIONS newdata = new DATA_TIMEINFECTIONS();
+        DATA_TIMEAMOUNT newdata = new DATA_TIMEAMOUNT();
         newdata.Time = TimeHandler.TIME.CurrentTime;
         newdata.Date = TimeHandler.TIME.CurrentDate;
-        newdata.Infected = Infected;
+        newdata.Amount = Infected;
         Infections.Add(newdata);
     }
 }
