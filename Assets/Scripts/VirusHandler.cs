@@ -34,7 +34,7 @@ public class VirusHandler : MonoBehaviour
             double infected = 0;
             for (int i = 0; i < Countries.Count; i++)
             {
-                infected += Countries[i].Infected;
+                infected += Countries[i].Population_Infected;
                 for (int j = 0; j < Countries[i].Provinces.Count; j++)
                 {
                     if (Countries[i].Provinces[j].Population_Infected < Countries[i].Provinces[j].Population)

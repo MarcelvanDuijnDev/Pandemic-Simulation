@@ -50,12 +50,12 @@ public class Province : MonoBehaviour
         {
             if (DateInfected[i].Date.y <= TimeHandler.TIME.CurrentDate.y)
             {
-                if (DateInfected[i].Date.x < TimeHandler.TIME.CurrentDate.x)
+                if (DateInfected[i].Date.x <= TimeHandler.TIME.CurrentDate.x)
                 {
-                    double calcdeath = DateInfected[i].Amount * .02f;
-                    Population_Dead += (int)Mathf.Floor((float)calcdeath);
+                    double calcdeath = DateInfected[i].Amount * .01f;
+                    Population_Dead += Mathf.RoundToInt((float)calcdeath);
                     double calchealthy = DateInfected[i].Amount - calcdeath;
-                    Population_Healthy += (int)Mathf.Floor((float)calchealthy);
+                    Population_Healthy += Mathf.RoundToInt((float)calchealthy);
 
                     DateInfected.RemoveAt(i);
                     CalculatePopulationStatus();
@@ -66,6 +66,9 @@ public class Province : MonoBehaviour
             Population_Infected += (int)DateInfected[i].Amount;
         }
         Population_Normal = (int)Population - Population_Infected - Population_Dead - Population_Healthy;
+
+        //Set Color
+        _Mat.color = new Vector4(1, 1 - (Population_Infected + Population_Dead) / Population, 1 - Population_Infected / Population, 1);
     }
 
     public void Add_Infected(int amount)
@@ -77,7 +80,6 @@ public class Province : MonoBehaviour
                 Population_Normal -= amount;
                 Population_Infected += amount;
                 _InfectedAdded += amount;
-                _Mat.color = new Vector4(1, 1 - Population_Infected / Population, 1 - Population_Infected / Population, 1);
             }
             else
             {
@@ -124,7 +126,6 @@ public class Province : MonoBehaviour
     }
 }
 
-[System.Serializable]
 public class DateInfected
 {
     public Vector3 Date; //Day/Month/Year

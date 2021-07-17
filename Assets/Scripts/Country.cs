@@ -5,12 +5,18 @@ using UnityEngine;
 public class Country : MonoBehaviour
 {
     public CountrySO CountryProfile;
-    public double Infected;
     public double Population;
+    public double Population_Normal;
+    public double Population_Infected;
+    public double Population_Healthy;
+    public double Population_Dead;
 
     public List<Province> Provinces;
 
-    public List<DATA_TIMEAMOUNT> Infections = new List<DATA_TIMEAMOUNT>();
+    public List<DATA_TIMEAMOUNT> DATAInfections = new List<DATA_TIMEAMOUNT>();
+    public List<DATA_TIMEAMOUNT> DATANormal = new List<DATA_TIMEAMOUNT>();
+    public List<DATA_TIMEAMOUNT> DATADead = new List<DATA_TIMEAMOUNT>();
+    public List<DATA_TIMEAMOUNT> DATAHealthy = new List<DATA_TIMEAMOUNT>();
 
     private Material _Mat;
 
@@ -22,14 +28,20 @@ public class Country : MonoBehaviour
 
     public void UpdateInfected()
     {
-        float infected = 0;
+        Population_Infected = 0;
+        Population_Normal = 0;
+        Population_Healthy = 0;
+        Population_Dead = 0;
+
         for (int i = 0; i < Provinces.Count; i++)
         {
-            infected += Provinces[i].Population_Infected;
+            Population_Infected += Provinces[i].Population_Infected;
+            Population_Normal += Provinces[i].Population_Normal;
+            Population_Healthy += Provinces[i].Population_Healthy;
+            Population_Dead += Provinces[i].Population_Dead;
         }
-        Infected = infected;
 
-        float colorcalc = (float)Infected / (float)Population;
+        float colorcalc = (float)Population_Infected / (float)Population;
         _Mat.color = new Vector4(1, 1 - colorcalc, 1 - colorcalc, 1);
     }
 
@@ -38,7 +50,25 @@ public class Country : MonoBehaviour
         DATA_TIMEAMOUNT newdata = new DATA_TIMEAMOUNT();
         newdata.Time = TimeHandler.TIME.CurrentTime;
         newdata.Date = TimeHandler.TIME.CurrentDate;
-        newdata.Amount = Infected;
-        Infections.Add(newdata);
+        newdata.Amount = Population_Infected;
+        DATAInfections.Add(newdata);
+
+        DATA_TIMEAMOUNT newdata2 = new DATA_TIMEAMOUNT();
+        newdata2.Time = TimeHandler.TIME.CurrentTime;
+        newdata2.Date = TimeHandler.TIME.CurrentDate;
+        newdata2.Amount = Population_Normal;
+        DATANormal.Add(newdata2);
+
+        DATA_TIMEAMOUNT newdata3 = new DATA_TIMEAMOUNT();
+        newdata3.Time = TimeHandler.TIME.CurrentTime;
+        newdata3.Date = TimeHandler.TIME.CurrentDate;
+        newdata3.Amount = Population_Dead;
+        DATADead.Add(newdata3);
+
+        DATA_TIMEAMOUNT newdata4 = new DATA_TIMEAMOUNT();
+        newdata4.Time = TimeHandler.TIME.CurrentTime;
+        newdata4.Date = TimeHandler.TIME.CurrentDate;
+        newdata4.Amount = Population_Healthy;
+        DATAHealthy.Add(newdata4);
     }
 }
