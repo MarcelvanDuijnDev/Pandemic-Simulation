@@ -10,6 +10,6 @@ public class VirusSO : ScriptableObject
     [Header("Infection")]
     public float Ro;
     public float InfectionDuration;
-    
+    public float DeathRate;
 
 }

@@ -103,10 +103,10 @@ public class CameraMovement : MonoBehaviour
         {
             string info = "Country Name: " + _CountryRef.CountryProfile.CountryName + "\n" +
                 "Population: " + _CountryRef.CountryProfile.Population.ToString("n0") + "\n" +
-                "Normal: " + _CountryRef.Population_Normal.ToString("n0") + "\n" +
-                "Healthy: " + _CountryRef.Population_Healthy.ToString("n0") + "\n" +
-                "Infected: " + _CountryRef.Population_Infected.ToString("n0") + "\n" +
-                "Dead: " + _CountryRef.Population_Dead.ToString("n0");
+                "Normal: " + _CountryRef.Population_Normal.ToString("n0") + " (" + (_CountryRef.Population_Normal / _CountryRef.Population * 100).ToString("0.00") + "%)" + "\n" +
+                "Healthy: " + _CountryRef.Population_Healthy.ToString("n0") + " (" + (_CountryRef.Population_Healthy / _CountryRef.Population * 100).ToString("0.00") + "%)" + "\n" +
+                "Infected: " + _CountryRef.Population_Infected.ToString("n0") + " (" + (_CountryRef.Population_Infected / _CountryRef.Population * 100).ToString("0.00") + "%)" + "\n" +
+                "Dead: " + _CountryRef.Population_Dead.ToString("n0") + " (" + (_CountryRef.Population_Dead / _CountryRef.Population * 100).ToString("0.00") + "%)";
             SimulationHandler.SIMHANDLER.Set_ClickInfoText(info);
         }
 
@@ -115,10 +115,10 @@ public class CameraMovement : MonoBehaviour
         {
             string info = "Province Name: " + _ProvinceRef.ProvinceProfile.ProvinceName + "\n" +
                 "Population: " + _ProvinceRef.ProvinceProfile.Population.ToString("n0") + "\n" +
-                "Normal: " + _ProvinceRef.Population_Normal.ToString("n0") + "\n" +
-                "Healthy: " + _ProvinceRef.Population_Healthy.ToString("n0") + "\n" +
-                "Infected: " + _ProvinceRef.Population_Infected.ToString("n0") + "\n" +
-                "Dead: " + _ProvinceRef.Population_Dead.ToString("n0");
+                "Normal: " + _ProvinceRef.Population_Normal.ToString("n0") + " (" + (_ProvinceRef.Population_Normal / _ProvinceRef.Population * 100).ToString("0.00") + "%)" + "\n" +
+                "Healthy: " + _ProvinceRef.Population_Healthy.ToString("n0") + " (" + (_ProvinceRef.Population_Healthy / _ProvinceRef.Population * 100).ToString("0.00") + "%)" + "\n" +
+                "Infected: " + _ProvinceRef.Population_Infected.ToString("n0") + " (" + (_ProvinceRef.Population_Infected / _ProvinceRef.Population * 100).ToString("0.00") + "%)" + "\n" +
+                "Dead: " + _ProvinceRef.Population_Dead.ToString("n0") + " (" + (_ProvinceRef.Population_Dead / _ProvinceRef.Population * 100).ToString("0.00") + "%)";
             SimulationHandler.SIMHANDLER.Set_ClickInfoText(info);
         }
 

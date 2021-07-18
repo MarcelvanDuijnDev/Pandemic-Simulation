@@ -12,6 +12,8 @@ public class Province : MonoBehaviour
     public int Population_Healthy;
     public int Population_Dead;
 
+    public int StartInfected;
+
     private Material _Mat;
 
     public List<DATA_TIMEAMOUNT> DATAInfections = new List<DATA_TIMEAMOUNT>();
@@ -22,12 +24,18 @@ public class Province : MonoBehaviour
 
     private Vector3 _CheckDate = Vector3.zero;
     private int _InfectedAdded;
+    private float _DeathRate;
+
+    private bool _NoNormalLeft;
 
     private void Start()
     {
         Population = ProvinceProfile.Population;
         Population_Normal = (int)Population;
         _Mat = GetComponent<MeshRenderer>().material;
+        _DeathRate = SimulationHandler.SIMHANDLER.VirusHandler.Virus.DeathRate * 0.01f;
+
+        Add_Infected(StartInfected);
     }
 
     private void Update()
@@ -52,11 +60,10 @@ public class Province : MonoBehaviour
             {
                 if (DateInfected[i].Date.x <= TimeHandler.TIME.CurrentDate.x)
                 {
-                    double calcdeath = DateInfected[i].Amount * .01f;
+                    double calcdeath = DateInfected[i].Amount * _DeathRate;
                     Population_Dead += Mathf.RoundToInt((float)calcdeath);
                     double calchealthy = DateInfected[i].Amount - calcdeath;
                     Population_Healthy += Mathf.RoundToInt((float)calchealthy);
-
                     DateInfected.RemoveAt(i);
                     CalculatePopulationStatus();
                     return;
@@ -66,6 +73,18 @@ public class Province : MonoBehaviour
             Population_Infected += (int)DateInfected[i].Amount;
         }
         Population_Normal = (int)Population - Population_Infected - Population_Dead - Population_Healthy;
+
+        //Notification test
+        if(Population_Normal == 0 && !_NoNormalLeft)
+        {
+            NotificationHandler.NOTIF.SetNotification("Privince: " + ProvinceProfile.ProvinceName + " has no uneffected people left",
+                "Every person has been in contact with " + SimulationHandler.SIMHANDLER.VirusHandler.Virus.VirusName + ",\n \n" +
+                "Current situation: \n" +
+                "Infected: " + Population_Infected.ToString() + "\n" +
+                "Dead: " + Population_Dead.ToString() + "\n" +
+                "Healthy: " + Population_Healthy.ToString());
+            _NoNormalLeft = true;
+        }
 
         //Set Color
         _Mat.color = new Vector4(1, 1 - (Population_Infected + Population_Dead) / Population, 1 - Population_Infected / Population, 1);
@@ -120,8 +139,9 @@ public class Province : MonoBehaviour
     void AddDate(int amount)
     {
         DateInfected newdateinfected = new DateInfected();
-        newdateinfected.Date = TimeHandler.TIME.Get_DateAfterDays(14);
+        newdateinfected.Date = TimeHandler.TIME.Get_DateAfterDays(Mathf.RoundToInt(SimulationHandler.SIMHANDLER.VirusHandler.Virus.InfectionDuration));
         newdateinfected.Amount = amount;
+        newdateinfected.InfectedPerDay = ((float)amount / SimulationHandler.SIMHANDLER.VirusHandler.Virus.InfectionDuration) * SimulationHandler.SIMHANDLER.VirusHandler.Virus.Ro;
         DateInfected.Add(newdateinfected);
     }
 }
@@ -130,4 +150,5 @@ public class DateInfected
 {
     public Vector3 Date; //Day/Month/Year
     public double Amount; //Total people
+    public float InfectedPerDay;
 }

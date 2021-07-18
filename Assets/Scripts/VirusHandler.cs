@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VirusHandler : MonoBehaviour
 {
-    [SerializeField] private VirusSO _Virus = null;
+    public VirusSO Virus = null;
 
     [SerializeField] private List<Country> Countries;
 
@@ -12,8 +12,7 @@ public class VirusHandler : MonoBehaviour
     public double TotalPopulationInfected;
 
     //testing
-    float _Timer = 0;
-    public float _UpdateTime = .1f;
+    private Vector3 _CheckDate;
 
     private void Start()
     {
@@ -27,10 +26,8 @@ public class VirusHandler : MonoBehaviour
 
     void Update()
     {
-        _Timer += 1 * Time.deltaTime;
-        if (_Timer >= _UpdateTime)
+        if (_CheckDate != TimeHandler.TIME.CurrentDate)
         {
-
             double infected = 0;
             for (int i = 0; i < Countries.Count; i++)
             {
@@ -40,13 +37,19 @@ public class VirusHandler : MonoBehaviour
                     if (Countries[i].Provinces[j].Population_Infected < Countries[i].Provinces[j].Population)
                     {
                         //For Testing
-                        Countries[i].Provinces[j].Add_Infected(Random.Range(0, 100000));
+                        if (Countries[i].Provinces[j].DateInfected.Count > 0)
+                        {
+                            for (int k = 0; k < Countries[i].Provinces[j].DateInfected.Count; k++)
+                            {
+                                Countries[i].Provinces[j].Add_Infected((int)Countries[i].Provinces[j].DateInfected[k].InfectedPerDay);
+                            }
+                        }
                         Countries[i].UpdateInfected();
                     }
                 }
             }
             TotalPopulationInfected = infected;
-            _Timer = 0;
+            _CheckDate = TimeHandler.TIME.CurrentDate;
         }
     }
 }

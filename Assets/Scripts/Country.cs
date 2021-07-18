@@ -20,6 +20,9 @@ public class Country : MonoBehaviour
 
     private Material _Mat;
 
+    //Notifications
+    private bool _Notif_Effected;
+
     private void Awake()
     {
         Population = CountryProfile.Population;
@@ -43,6 +46,18 @@ public class Country : MonoBehaviour
 
         float colorcalc = (float)Population_Infected / (float)Population;
         _Mat.color = new Vector4(1, 1 - colorcalc, 1 - colorcalc, 1);
+
+        //Notificatios
+        if(!_Notif_Effected && Population_Normal == 0)
+        {
+            NotificationHandler.NOTIF.SetNotification(CountryProfile.CountryName + ":" + " has no uneffected people left",
+                "Every person has been in contact with " + SimulationHandler.SIMHANDLER.VirusHandler.Virus.VirusName + ",\n \n" +
+                "Current situation: \n" +
+                "Infected: " + Population_Infected.ToString() + "\n" +
+                "Dead: " + Population_Dead.ToString() + "\n" +
+                "Healthy: " + Population_Healthy.ToString());
+            _Notif_Effected = true;
+        }
     }
 
     public void AddDataInfections()

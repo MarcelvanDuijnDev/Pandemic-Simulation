@@ -23,7 +23,7 @@ public class SimulationHandler : MonoBehaviour
     [HideInInspector] public DataHandler DataHandler;
     [HideInInspector] public VirusHandler VirusHandler;
 
-    void Start()
+    void Awake()
     {
         SIMHANDLER = this;
 
