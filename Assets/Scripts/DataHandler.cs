@@ -1,33 +1,91 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class DataHandler : MonoBehaviour
 {
-    [SerializeField] private DATA _Data = null;
+    public static DataHandler DATASAVE;
 
-    void Start()
+    public VIRUSDATA VirusData = new VIRUSDATA();
+    public DATA SaveFile = new DATA();
+
+
+    void Awake()
     {
-        
+        DATASAVE = this;
+        LoadVirusData();
     }
 
-    void Update()
+    //Data
+    public void SaveData()
     {
-        
+        string jsonData = JsonUtility.ToJson(SaveFile, true);
+        File.WriteAllText(Application.persistentDataPath + "/SaveData.json", jsonData);
     }
+    public void LoadData()
+    {
+        try
+        {
+            string dataAsJson = File.ReadAllText(Application.persistentDataPath + "/SaveData.json");
+            SaveFile = JsonUtility.FromJson<DATA>(dataAsJson);
+        }
+        catch
+        {
+            SaveData();
+        }
+    }
+    public DATA GetSaveData()
+    {
+        return SaveFile;
+    }
+
+    //VirusData
+    public void SaveVirusData()
+    {
+        string jsonData = JsonUtility.ToJson(VirusData, true);
+        File.WriteAllText(Application.persistentDataPath + "/VirusData.json", jsonData);
+    }
+    public void LoadVirusData()
+    {
+        try
+        {
+            string dataAsJson = File.ReadAllText(Application.persistentDataPath + "/VirusData.json");
+            VirusData = JsonUtility.FromJson<VIRUSDATA>(dataAsJson);
+        }
+        catch
+        {
+            SaveVirusData();
+        }
+    }
+    public VIRUSDATA GetVirusSaveData()
+    {
+        return VirusData;
+    }
+}
+
+//Virus
+[System.Serializable]
+public class VIRUSDATA
+{
+    public List<DATA_VIRUS> Virus;
+}
+[System.Serializable]
+public class DATA_VIRUS
+{
+    public string VirusName;
+
+    [Header("Infection")]
+    public float Ro;
+    public float InfectionDuration;
+    public float DeathRate;
 }
 
 public class DATA
 {
     public DATA_SPREAD VirusSpread;
-    public DATA_VIRUS Virus;
 }
 
-public class DATA_VIRUS
-{
-    public string VirusName;
-
-}
 
 public class DATA_SPREAD
 {
