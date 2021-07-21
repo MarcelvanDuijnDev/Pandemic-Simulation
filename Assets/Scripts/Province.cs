@@ -33,7 +33,7 @@ public class Province : MonoBehaviour
         Population = ProvinceProfile.Population;
         Population_Normal = (int)Population;
         _Mat = GetComponent<MeshRenderer>().material;
-        _DeathRate = SimulationHandler.SIMHANDLER.VirusHandler.Virus.DeathRate * 0.01f;
+        _DeathRate = SimulationHandler.SIMHANDLER.Virus_DeathRate * 0.01f;
 
         Add_Infected(StartInfected);
     }
@@ -78,7 +78,7 @@ public class Province : MonoBehaviour
         if(Population_Normal == 0 && !_NoNormalLeft)
         {
             NotificationHandler.NOTIF.SetNotification("Privince: " + ProvinceProfile.ProvinceName + " has no uneffected people left",
-                "Every person has been in contact with " + SimulationHandler.SIMHANDLER.VirusHandler.Virus.VirusName + ",\n \n" +
+                "Every person has been in contact with " + SimulationHandler.SIMHANDLER.Virus_Name + ",\n \n" +
                 "Current situation: \n" +
                 "Infected: " + Population_Infected.ToString() + "\n" +
                 "Dead: " + Population_Dead.ToString() + "\n" +
@@ -139,9 +139,9 @@ public class Province : MonoBehaviour
     void AddDate(int amount)
     {
         DateInfected newdateinfected = new DateInfected();
-        newdateinfected.Date = TimeHandler.TIME.Get_DateAfterDays(Mathf.RoundToInt(SimulationHandler.SIMHANDLER.VirusHandler.Virus.InfectionDuration));
+        newdateinfected.Date = TimeHandler.TIME.Get_DateAfterDays(Mathf.RoundToInt(SimulationHandler.SIMHANDLER.Virus_Duration));
         newdateinfected.Amount = amount;
-        newdateinfected.InfectedPerDay = ((float)amount / SimulationHandler.SIMHANDLER.VirusHandler.Virus.InfectionDuration) * SimulationHandler.SIMHANDLER.VirusHandler.Virus.Ro;
+        newdateinfected.InfectedPerDay = ((float)amount / SimulationHandler.SIMHANDLER.Virus_Duration) * SimulationHandler.SIMHANDLER.Virus_Ro;
         DateInfected.Add(newdateinfected);
     }
 }

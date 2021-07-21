@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CreateVirus.unity
     guid: b8ba070c04885a34f903e7a25e1004f1
+  - enabled: 1
+    path: Assets/Scenes/SimulationSettings.unity
+    guid: 7c65753d32ca6c3478d4da98e49a4816
   m_configObjects: {}

@@ -11,6 +11,13 @@ public class SimulationHandler : MonoBehaviour
     private float _TimerCountry = 0;
     private float _TimerProvince = 0;
 
+    [Header("Virus")]
+    public int VirusID;
+    public string Virus_Name;
+    public float Virus_Ro;
+    public float Virus_DeathRate;
+    public float Virus_Duration;
+
     [Header("Click/WorldSpace Info")]
     public Transform CameraObj;
     public Transform ClickInfo;
@@ -30,6 +37,18 @@ public class SimulationHandler : MonoBehaviour
         WorldHandler = GetComponent<WorldHandler>();
         DataHandler = GetComponent<DataHandler>();
         VirusHandler = GetComponent<VirusHandler>();
+    }
+
+    private void Start()
+    {
+        if (GameObject.Find("SimulationSettings") != null)
+            VirusID = GameObject.Find("SimulationSettings").GetComponent<SimulationSettings>().VirusID;
+        else
+            VirusID = 0;
+        Virus_Name = DataHandler.DATASAVE.VirusData.Virus[VirusID].VirusName;
+        Virus_DeathRate = DataHandler.DATASAVE.VirusData.Virus[VirusID].DeathRate;
+        Virus_Ro = DataHandler.DATASAVE.VirusData.Virus[VirusID].Ro;
+        Virus_Duration = DataHandler.DATASAVE.VirusData.Virus[VirusID].InfectionDuration;
     }
 
     private void Update()

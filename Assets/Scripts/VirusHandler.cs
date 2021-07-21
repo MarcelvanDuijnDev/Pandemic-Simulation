@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class VirusHandler : MonoBehaviour
 {
-    public VirusSO Virus = null;
-
     [SerializeField] private List<Country> Countries;
 
     public double TotalPopulation;
     public double TotalPopulationInfected;
+
 
     //testing
     private Vector3 _CheckDate;

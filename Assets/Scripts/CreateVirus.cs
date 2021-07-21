@@ -6,15 +6,15 @@ using UnityEngine.UI;
 
 public class CreateVirus : MonoBehaviour
 {
-
     [Header("Ref")]
     [SerializeField] private TextMeshProUGUI _Text_VirusName;
     [SerializeField] private TMP_InputField _Input_VirusName;
     [SerializeField] private TMP_InputField _Input_Ro;
     [SerializeField] private TMP_InputField _Input_DeathRate;
     [SerializeField] private TMP_InputField _Input_Duration;
+    [SerializeField] private TextMeshProUGUI _Text_TemplateAmount;
 
-
+    [Header("Library")]
     [SerializeField] private Transform _VirusLibraryContent = null;
     [SerializeField] private GameObject _ButtonTemplate = null;
 
@@ -43,7 +43,7 @@ public class CreateVirus : MonoBehaviour
                 _Input_VirusName.text = DataHandler.DATASAVE.VirusData.Virus[_Selected].VirusName;
                 _Input_DeathRate.text = DataHandler.DATASAVE.VirusData.Virus[_Selected].DeathRate.ToString();
                 _Input_Duration.text = DataHandler.DATASAVE.VirusData.Virus[_Selected].InfectionDuration.ToString();
-                _Input_Ro.text = DataHandler.DATASAVE.VirusData.Virus[_Selected].InfectionDuration.ToString();
+                _Input_Ro.text = DataHandler.DATASAVE.VirusData.Virus[_Selected].Ro.ToString();
                 _CheckSelected = _Selected;
             }
 
@@ -88,31 +88,30 @@ public class CreateVirus : MonoBehaviour
 
     private void Refresh()
     {
+        // Remove Buttons
         for (int i = 0; i < VirusButtons.Count; i++)
             Destroy(VirusButtons[i]);
 
+        // Set Default Text
         if (DataHandler.DATASAVE.VirusData.Virus.Count == 0)
         {
-            for (int i = 0; i < _Virus.Count; i++)
-            {
-                DATA_VIRUS newvirus = new DATA_VIRUS();
-                newvirus.VirusName = _Virus[i].name;
-                newvirus.DeathRate = _Virus[i].DeathRate;
-                newvirus.Ro = _Virus[i].Ro;
-                newvirus.InfectionDuration = _Virus[i].InfectionDuration;
-                DataHandler.DATASAVE.VirusData.Virus.Add(newvirus);
-            }
-            DataHandler.DATASAVE.SaveVirusData();
+            _Text_VirusName.text = "---";
+            _Input_VirusName.text = "---";
+            _Input_Duration.text = "0";
+            _Input_Ro.text = "0";
+            _Input_DeathRate.text = "0";
         }
 
         VirusButtons.Clear();
 
+        // Add new buttons
         for (int i = 0; i < DataHandler.DATASAVE.VirusData.Virus.Count; i++)
         {
             GameObject newobj = GameObject.Instantiate(_ButtonTemplate, _VirusLibraryContent);
             VirusButtons.Add(newobj);
         }
 
+        // Set Info
         for (int i = 0; i < VirusButtons.Count; i++)
         {
             VirusButtons[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = " " + (i + 1).ToString() + "   " + DataHandler.DATASAVE.VirusData.Virus[i].VirusName;
@@ -120,6 +119,10 @@ public class CreateVirus : MonoBehaviour
             x = i;
             VirusButtons[i].GetComponent<Button>().onClick.AddListener(delegate { SelectButton(x); });
         }
+
+        // Update Template Amount
+        _Text_TemplateAmount.text = "(" + _Virus.Count.ToString() + ")";
+
     }
 
     public void SelectButton(int id)
@@ -150,6 +153,31 @@ public class CreateVirus : MonoBehaviour
 
     public void SaveNewVirus()
     {
+        DataHandler.DATASAVE.SaveVirusData();
+        Refresh();
+    }
+
+    public void LoadDefault()
+    {
+        for (int i = 0; i < _Virus.Count; i++)
+        {
+            //Check exist
+            bool checkexist = false;
+            for (int j = 0; j < DataHandler.DATASAVE.VirusData.Virus.Count; j++)
+                if (DataHandler.DATASAVE.VirusData.Virus[j].VirusName == _Virus[i].VirusName)
+                    checkexist = true;
+
+            //Create new
+            if (!checkexist)
+            {
+                DATA_VIRUS newvirus = new DATA_VIRUS();
+                newvirus.VirusName = _Virus[i].VirusName;
+                newvirus.DeathRate = _Virus[i].DeathRate;
+                newvirus.Ro = _Virus[i].Ro;
+                newvirus.InfectionDuration = _Virus[i].InfectionDuration;
+                DataHandler.DATASAVE.VirusData.Virus.Add(newvirus);
+            }
+        }
         DataHandler.DATASAVE.SaveVirusData();
         Refresh();
     }

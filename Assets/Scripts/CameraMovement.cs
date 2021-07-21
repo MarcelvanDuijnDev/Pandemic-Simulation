@@ -11,8 +11,13 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private bool _InverseScroll = false;
     [SerializeField] private bool _CheckCorner = true;
 
+    [SerializeField] private Transform _SelectLight = null;
+
     private Country _CountryRef;
     private Province _ProvinceRef;
+
+    public Country _Selected_Country;
+    public Province _Selected_Province;
 
     private GameObject _CheckPrevObj;
     private float _CurrentSpeed;
@@ -108,6 +113,18 @@ public class CameraMovement : MonoBehaviour
                 "Infected: " + _CountryRef.Population_Infected.ToString("n0") + " (" + (_CountryRef.Population_Infected / _CountryRef.Population * 100).ToString("0.00") + "%)" + "\n" +
                 "Dead: " + _CountryRef.Population_Dead.ToString("n0") + " (" + (_CountryRef.Population_Dead / _CountryRef.Population * 100).ToString("0.00") + "%)";
             SimulationHandler.SIMHANDLER.Set_ClickInfoText(info);
+            
+            
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (_Selected_Province != null)
+                    _Selected_Province = null;
+
+                if (_Selected_Country == _CountryRef)
+                    _Selected_Country = null;
+                else
+                    _Selected_Country = _CountryRef;
+            }  
         }
 
         //Update Province Info
@@ -120,13 +137,38 @@ public class CameraMovement : MonoBehaviour
                 "Infected: " + _ProvinceRef.Population_Infected.ToString("n0") + " (" + (_ProvinceRef.Population_Infected / _ProvinceRef.Population * 100).ToString("0.00") + "%)" + "\n" +
                 "Dead: " + _ProvinceRef.Population_Dead.ToString("n0") + " (" + (_ProvinceRef.Population_Dead / _ProvinceRef.Population * 100).ToString("0.00") + "%)";
             SimulationHandler.SIMHANDLER.Set_ClickInfoText(info);
+            
+            
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (_Selected_Country != null)
+                    _Selected_Country = null;
+
+                if (_Selected_Province == _ProvinceRef)
+                {
+                    _Selected_Province = null;
+                    _SelectLight.position = new Vector3(0,-100,0);
+                }
+                else
+                {
+                    _Selected_Province = _ProvinceRef;
+                    _SelectLight.transform.position = new Vector3(_Selected_Province.transform.position.x, _Selected_Province.transform.position.y + .5f, _Selected_Province.transform.position.z);
+                }
+            }
         }
 
         //SetGraph
         for (int i = 0; i < SimulationHandler.SIMHANDLER.Graph.Count; i++)
         {
-            SimulationHandler.SIMHANDLER.Graph[i]._Province = _ProvinceRef;
-            SimulationHandler.SIMHANDLER.Graph[i]._Country = _CountryRef;
+            if (_Selected_Province != null)
+                SimulationHandler.SIMHANDLER.Graph[i]._Province = _Selected_Province;
+            else
+                SimulationHandler.SIMHANDLER.Graph[i]._Province = _ProvinceRef;
+
+            if (_Selected_Country != null)
+                SimulationHandler.SIMHANDLER.Graph[i]._Country = _Selected_Country;
+            else
+                SimulationHandler.SIMHANDLER.Graph[i]._Country = _CountryRef;
         }
         
     }

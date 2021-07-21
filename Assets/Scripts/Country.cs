@@ -51,7 +51,7 @@ public class Country : MonoBehaviour
         if(!_Notif_Effected && Population_Normal == 0)
         {
             NotificationHandler.NOTIF.SetNotification(CountryProfile.CountryName + ":" + " has no uneffected people left",
-                "Every person has been in contact with " + SimulationHandler.SIMHANDLER.VirusHandler.Virus.VirusName + ",\n \n" +
+                "Every person has been in contact with " + SimulationHandler.SIMHANDLER.Virus_Name + ",\n \n" +
                 "Current situation: \n" +
                 "Infected: " + Population_Infected.ToString() + "\n" +
                 "Dead: " + Population_Dead.ToString() + "\n" +
